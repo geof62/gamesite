@@ -1,0 +1,15 @@
+{%  extends 'base.html.twig' %}
+
+{% block body %}
+
+    <h1>Create new Project</h1>
+
+    {% if error %}
+        <div class="alert alert-danger">{{ error.message }}</div>
+    {% endif %}
+
+    {{ form.start }}
+    {{ form }}
+    {{ form.end }}
+
+{% endblock %}
