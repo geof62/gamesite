@@ -1,0 +1,29 @@
+security:
+    providers:
+        epitech:
+            id: raphy_epitech_user.user.provider
+
+    firewalls:
+        dev:
+            pattern: ^/(_(profiler|wdt)|css|images|js)/
+            security: false
+
+        main:
+            pattern:                    ^/
+            anonymous:                  true
+            provider:                   epitech
+            switch_user:                true
+            logout:
+                path:                   logout
+                target:                 index
+            intranet_login:
+                csrf_token_generator:   security.csrf.token_manager
+                login_path:             login
+                check_path:             login_check
+                default_target_path:    index
+                post_only:              true
+            remember_me:
+                secret:                 "%secret%"
+                lifetime:               604800
+                path:                   app_index
+                always_remember_me:     true
