@@ -1,0 +1,32 @@
+security:
+    providers:
+        in_memory:
+            memory: ~
+        epitech:
+            id: raphy_epitech_user.user.provider
+
+    firewalls:
+        dev:
+            pattern: ^/(_(profiler|wdt)|css|images|js)/
+            security: false
+
+        main:
+            pattern:                    ^/
+            anonymous:                  true
+            provider:                   epitech
+            switch_user:                true
+            logout:
+                path:                   logout # Your route name for logging out
+                target:                 app_index # Your route name to redirect after logged out
+            intranet_login:
+                csrf_token_generator:   security.csrf.token_manager
+                login_path:             login # Your route name for logging in
+                check_path:             login_check # Your route name for logging in check
+                default_target_path:    app_index # Your route name to redirect after logged in
+                post_only:              true
+            # Add auto remember me
+            remember_me:
+                secret:                 "%secret%"
+                lifetime:               604800
+                path:                   app_index
+                always_remember_me:     true
