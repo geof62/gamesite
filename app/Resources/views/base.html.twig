@@ -3,11 +3,30 @@
     <head>
         <meta charset="UTF-8" />
         <title>{% block title %}Welcome!{% endblock %}</title>
-        {% block stylesheets %}{% endblock %}
+        {% block stylesheets %}
+            <link href="{{ path('index') }}../../web/css/general.css" rel="stylesheet" />
+        {% endblock %}
         <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
     </head>
     <body>
-        {% block body %}{% endblock %}
+         <header>
+             <table>
+                 <tr>
+                     <td><a href="{{ path('index') }}">Accueil</a></td>
+                     <td><a href="{{ path('project_index') }}">Les projets</a></td>
+                     {% if app.user == NULL %}
+                          <td><a href="{{ path('login') }}">Connexion</a></td>
+                     {% else %}
+                         <td><a href="{{ path('project_show') }}">Mon projet</a></td>
+                         <td><a href="{{ path('logout') }}">Déconnexion</a></td>
+                     {% endif %}
+                 </tr>
+             </table>
+         </header>
+
+         <section>
+             {% block body %}{% endblock %}
+         </section>
         {% block javascripts %}{% endblock %}
     </body>
 </html>
