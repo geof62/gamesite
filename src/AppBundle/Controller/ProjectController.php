@@ -93,7 +93,7 @@ class ProjectController extends Controller
             return ($this->redirectToRoute('index'));
         $em = $this->getDoctrine()->getManager();
         $user = $this->get('security.token_storage')->getToken()->getUser();
-        if (($t = $em->getRepository('AppBundle:Project')->findByTeamLeader($user)) == NULL || $t->getId() != $project->getId())
+            if (($t = $em->getRepository('AppBundle:Project')->findByTeamLeader($user)) == NULL || $t->getId() != $project->getId())
             return ($this->redirectToRoute('index'));
         $deleteForm = $this->createDeleteForm($project);
         $editForm = $this->createForm('AppBundle\Form\ProjectType', $project);

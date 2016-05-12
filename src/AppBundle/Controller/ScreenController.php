@@ -42,12 +42,20 @@ class ScreenController extends Controller
      */
     public function newAction(Request $request)
     {
+        if (!$this->isGranted('ROLE_USER'))
+            return ($this->redirectToRoute('index'));
+        $em = $this->getDoctrine()->getManager();
+        $user = $this->get('security.token_storage')->getToken()->getUser();
+        $project = $em->getRepository('AppBundle:Project')->findByTeamLeader($user);
+        if ($project == NULL)
+            return ($this->redirectToRoute('index'));
         $screen = new Screen();
         $form = $this->createForm('AppBundle\Form\ScreenType', $screen);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
             $em = $this->getDoctrine()->getManager();
+            $screen->setProject($project);
             $screen->upload();
             $em->persist($screen);
             $em->flush();

@@ -15,10 +15,9 @@ class ScreenType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('project')
-            ->add('file', FileType::class);
+        $builder->add('file', FileType::class);
     }
-    
+
     /**
      * @param OptionsResolver $resolver
      */
@@ -28,3 +27,4 @@ class ScreenType extends AbstractType
             'data_class' => 'AppBundle\Entity\Screen'
         ));
     }
+}
