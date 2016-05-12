@@ -13,17 +13,9 @@
         <tbody>
         {% for screen in screens %}
             <tr>
-                <td><a href="{{ path('screen_show', { 'id': screen.id }) }}">{{ screen.id }}</a></td>
-                <td>
-                    <ul>
-                        <li>
-                            <a href="{{ path('screen_show', { 'id': screen.id }) }}">show</a>
-                        </li>
-                        <li>
-                            <a href="{{ path('screen_edit', { 'id': screen.id }) }}">edit</a>
-                        </li>
-                    </ul>
-                </td>
+                <td>{{ screen.id }}</td>
+                <td>{{ screen.project.title }}</td>
+                <td><img src="/uploads/{{ screen.path }}" /></td>
             </tr>
         {% endfor %}
         </tbody>
