@@ -3,6 +3,7 @@
 namespace AppBundle\Form;
 
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -17,9 +18,8 @@ class ProjectType extends AbstractType
         $builder
             ->add('title')
             ->add('description')
-            ->add('teamLeader')
-            ->add('bin')
-            ->add('sources')
+            ->add('bin', FileType::class)
+            ->add('sources', FileType::class)
         ;
     }
     
