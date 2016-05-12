@@ -41,12 +41,18 @@ class ProjectController extends Controller
      */
     public function newAction(Request $request)
     {
+        if (!$this->isGranted('ROLE_USER'))
+            return ($this->redirectToRoute('index'));
+        $em = $this->getDoctrine()->getManager();
+        $user = $this->get('security.token_storage')->getToken()->getUser();
+        if ($em->getRepository('AppBundle:Project')->findByTeamLeader($user) != NULL)
+            return ($this->redirectToRoute('index'));
         $project = new Project();
         $form = $this->createForm('AppBundle\Form\ProjectType', $project);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
+            $project->setTeamLeader($user);
             $em->persist($project);
             $em->flush();
 
@@ -83,12 +89,17 @@ class ProjectController extends Controller
      */
     public function editAction(Request $request, Project $project)
     {
+        if (!$this->isGranted('ROLE_USER'))
+            return ($this->redirectToRoute('index'));
+        $em = $this->getDoctrine()->getManager();
+        $user = $this->get('security.token_storage')->getToken()->getUser();
+        if (($t = $em->getRepository('AppBundle:Project')->findByTeamLeader($user)) == NULL || $t->getId() != $project->getId())
+            return ($this->redirectToRoute('index'));
         $deleteForm = $this->createDeleteForm($project);
         $editForm = $this->createForm('AppBundle\Form\ProjectType', $project);
         $editForm->handleRequest($request);
 
         if ($editForm->isSubmitted() && $editForm->isValid()) {
-            $em = $this->getDoctrine()->getManager();
             $em->persist($project);
             $em->flush();
 

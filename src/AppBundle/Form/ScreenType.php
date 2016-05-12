@@ -28,4 +28,3 @@ class ScreenType extends AbstractType
             'data_class' => 'AppBundle\Entity\Screen'
         ));
     }
-}
