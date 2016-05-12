@@ -36,7 +36,7 @@ class Project
     private $description;
 
     /**
-     * @ORM\OneToOne(targetEntity="User", inversedBy="project")
+     * @ORM\OneToOne(targetEntity="User", mappedBy="project")
      * @ORM\JoinColumn(name="user_login", referencedColumnName="login")
      */
     private $teamLeader;
@@ -225,5 +225,10 @@ class Project
     public function getSources()
     {
         return $this->sources;
+    }
+
+    public function __toString()
+    {
+        return $this->getTitle();
     }
 }

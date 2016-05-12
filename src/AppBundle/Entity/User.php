@@ -40,4 +40,8 @@ class User extends \Raphy\Epitech\UserBundle\Entity\User
     {
         return $this->project;
     }
+
+    public function __toString() {
+        return $this->getUsername();
+    }
 }

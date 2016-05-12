@@ -16,6 +16,24 @@ use AppBundle\Form\ScreenType;
  */
 class ScreenController extends Controller
 {
+
+    /**
+     * Lists all Project entities.
+     *
+     * @Route("/screens", name="screen_index")
+     * @Method("GET")
+     */
+    public function indexAction()
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $screen = $em->getRepository('AppBundle:Screen')->findAll();
+
+        return $this->render('screen/index.html.twig', array(
+            'screens' => $screen,
+        ));
+    }
+
     /**
      * Creates a new Screen entity.
      *
@@ -30,6 +48,7 @@ class ScreenController extends Controller
 
         if ($form->isSubmitted() && $form->isValid()) {
             $em = $this->getDoctrine()->getManager();
+            $screen->upload();
             $em->persist($screen);
             $em->flush();
 
