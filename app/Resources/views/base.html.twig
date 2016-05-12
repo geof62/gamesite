@@ -7,6 +7,20 @@
         <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
     </head>
     <body>
+        <header>
+            <div id="header-name"><a href="{{ path('index') }}">Le nom de la gamejam</a></div>
+            <div class="action">
+                {% if app.user %}
+                    {% if app.user.project %}
+                        <a href="{{ path('project_show', {id: app.user.project.id}) }}">{{ app.user.project }}</a>
+                    {% else %}
+                        <a href="{{ path('project_new') }}">Create project</a>
+                    {% endif %}
+                {% else %}
+                    <a href="{{ path('login') }}">Login</a>
+                {% endif %}
+            </div>
+        </header>
         {% block body %}{% endblock %}
         {% block javascripts %}{% endblock %}
     </body>

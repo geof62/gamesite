@@ -36,13 +36,13 @@ class Project
     private $description;
 
     /**
-     * @ORM\OneToOne(targetEntity="User", inversedBy="project")
+     * @ORM\OneToOne(targetEntity="User", mappedBy="project")
      * @ORM\JoinColumn(name="user_login", referencedColumnName="login")
      */
     private $teamLeader;
 
     /**
-     * @ORM\OneToMany(targetEntity="Screen", mappedBy="project")
+     * @ORM\OneToMany(targetEntity="Screen", mappedBy="project", cascade={"remove"})
      */
     private $screens;
 
@@ -225,5 +225,10 @@ class Project
     public function getSources()
     {
         return $this->sources;
+    }
+
+    public function __toString()
+    {
+        return $this->getTitle();
     }
 }
