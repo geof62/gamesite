@@ -70,24 +70,12 @@ class ProjectController extends Controller
     /**
      * Finds and displays a Project entity.
      *
-     * @Route("/show", name="project_show")
+     * @Route("/show/{project}", name="project_show")
      * @Method("GET")
      */
-    public function showAction(Request $request)
+    public function showAction(Request $request, Project $project)
     {
-        if (!$this->isGranted('ROLE_USER'))
-            return ($this->redirectToRoute('index'));
-        $em = $this->getDoctrine()->getManager();
-        $user = $this->get('security.token_storage')->getToken()->getUser();
-        if (($project = $em->getRepository('AppBundle:Project')->findOneByTeamLeader($user)) == NULL)
-            return ($this->redirectToRoute('project_create'));
-        
-        $deleteForm = $this->createDeleteForm($project);
-
-        return $this->render('project/show.html.twig', array(
-            'project' => $project,
-            'delete_form' => $deleteForm->createView(),
-        ));
+        return $this->render('project/show.html.twig', array('project' => $project));
     }
 
     /**

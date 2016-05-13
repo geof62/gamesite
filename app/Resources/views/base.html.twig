@@ -4,24 +4,16 @@
         <meta charset="UTF-8" />
         <title>{% block title %}Welcome!{% endblock %}</title>
         {% block stylesheets %}
-            <link href="{{ path('index') }}../../web/css/general.css" rel="stylesheet" />
+            {% stylesheets 'css/general.css'
+                'css/bootstrap.min.css' filter='cssrewrite' %}
+            <link rel="stylesheet" href="{{ asset_url }}" />
+            {% endstylesheets %}
         {% endblock %}
         <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
     </head>
     <body>
          <header>
-             <table>
-                 <tr>
-                     <td><a href="{{ path('index') }}">Accueil</a></td>
-                     <td><a href="{{ path('project_index') }}">Les projets</a></td>
-                     {% if app.user == NULL %}
-                          <td><a href="{{ path('login') }}">Connexion</a></td>
-                     {% else %}
-                         <td><a href="{{ path('project_show') }}">Mon projet</a></td>
-                         <td><a href="{{ path('logout') }}">Déconnexion</a></td>
-                     {% endif %}
-                 </tr>
-             </table>
+             {% include "parts/nav.html.twig" %}
          </header>
 
          <section>
