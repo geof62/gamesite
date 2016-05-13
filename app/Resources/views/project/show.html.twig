@@ -9,7 +9,10 @@
             <h1 class="page-header">{{ project.title }}
                 <small>Members</small>
                 {% if app.user != null and app.user.project == project %}
-                    <span class="pull-right btn btn-info"><a href="{{ path('project_edit', {'id': project.id}) }}">Editer</a></span>
+                    <div class="pull-right">
+                        <a href="{{ path('project_delete', {'id': project.id}) }}"><span class="btn btn-danger">Supprimer</span></a>
+                        <a href="{{ path('project_edit', {'id': project.id}) }}"><span class="btn btn-info">Editer</span></a>
+                    </div>
                 {% endif %}
             </h1>
         </div>

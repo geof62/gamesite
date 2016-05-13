@@ -3,6 +3,7 @@
     <head>
         <meta charset="UTF-8" />
         <title>{% block title %}Welcome!{% endblock %}</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
         {% block stylesheets %}
             {% stylesheets 'css/general.css'
                 'css/bootstrap.min.css' filter='cssrewrite' %}
@@ -19,5 +20,11 @@
          <section>
              {% block body %}{% endblock %}
          </section>
+        {% block script %}
+            {% javascripts 'js/jquery.js'
+                'js/bootstrap.min.js' output='js/app.js' %}
+                <script src="{{ asset_url }}"></script>
+            {% endjavascripts %}
+        {% endblock %}
     </body>
 </html>

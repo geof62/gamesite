@@ -6,6 +6,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use AppBundle\Entity\Project;
 use AppBundle\Form\ProjectType;
 
@@ -45,8 +46,8 @@ class ProjectController extends Controller
             return ($this->redirectToRoute('index'));
         $em = $this->getDoctrine()->getManager();
         $user = $this->get('security.token_storage')->getToken()->getUser();
-        if ($em->getRepository('AppBundle:Project')->findByTeamLeader($user) != NULL)
-            return ($this->redirectToRoute('index'));
+        if (($project = $em->getRepository('AppBundle:Project')->findOneByTeamLeader($user)) != NULL)
+            return ($this->redirectToRoute('project_show', array('project' => $project->getId())));
         $project = new Project();
         $form = $this->createForm('AppBundle\Form\ProjectType', $project);
         $form->handleRequest($request);
@@ -58,7 +59,7 @@ class ProjectController extends Controller
             $user->setProject($project);
             $em->flush();
 
-            return $this->redirectToRoute('project_show', array('id' => $project->getId()));
+            return $this->redirectToRoute('project_show', array('project' => $project->getId()));
         }
 
         return $this->render('project/new.html.twig', array(
@@ -114,18 +115,25 @@ class ProjectController extends Controller
      * Deletes a Project entity.
      *
      * @Route("/{id}", name="project_delete")
-     * @Method("DELETE")
+     * @Method({"DELETE", "GET"})
      */
     public function deleteAction(Request $request, Project $project)
     {
+        $user = $this->get('security.token_storage')->getToken()->getUser();
         $form = $this->createDeleteForm($project);
         $form->handleRequest($request);
 
+        if ($user->getProject() != $project)
+            throw $this->createNotFoundException('You are not the owner of this project');
         if ($form->isSubmitted() && $form->isValid()) {
             $this->get('security.token_storage')->getToken()->getUser()->setProject(NULL);
             $em = $this->getDoctrine()->getManager();
             $em->remove($project);
             $em->flush();
+        }
+        else
+        {
+            return $this->render('project/delete.html.twig', array('projet' => $project, 'form' => $this->createDeleteForm($project)->createView()));
         }
 
         return $this->redirectToRoute('project_index');
@@ -142,6 +150,10 @@ class ProjectController extends Controller
     {
         return $this->createFormBuilder()
             ->setAction($this->generateUrl('project_delete', array('id' => $project->getId())))
+            ->add('save', SubmitType::class, array(
+                'attr' => array('class' => 'btn btn-danger'),
+                'label' => "Supprimer"
+            ))
             ->setMethod('DELETE')
             ->getForm()
         ;

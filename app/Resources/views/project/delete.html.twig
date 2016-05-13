@@ -1,0 +1,11 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <div class="container text-center" style="padding-top: 10px">
+        <p>
+            Attention vous vous appretez à supprimer de manière <strong>définitive</strong> votre projet "{{ projet.title }}". Shouaitez vous valider votre action ?
+        </p>
+        {{ form(form) }}
+        {{ form_end(form) }}
+    </div>
+{% endblock %}
