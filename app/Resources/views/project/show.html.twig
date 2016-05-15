@@ -31,9 +31,8 @@
             <p>{{ project.description }}</p>
             <h3>Details</h3>
             <ul>
-                <li>Systeme d'expoitation: NULL</li>
                 {% if project.bin != NULL %}
-                    <li>Binnaire: <a href="{{ project.bin }}">{{ project.title }}</a></li>
+                    <li>Binaire: <a href="{{ project.bin }}">{{ project.title }}</a></li>
                 {% endif %}
                 {% if project.sources != null %}
                     <li>Sources: <a href="{{ project.sources }}">Télécharger</a></li>
@@ -44,69 +43,5 @@
     </div>
     <!-- /.row -->
 
-    <!-- Related Projects Row -->
-    <div class="row">
-
-        <div class="col-lg-12">
-            <h3 class="page-header">Autres projets</h3>
-        </div>
-
-        <div class="col-sm-3 col-xs-6">
-            <a href="#">
-                <img class="img-responsive portfolio-item" src="http://placehold.it/500x300" alt="">
-            </a>
-        </div>
-
-        <div class="col-sm-3 col-xs-6">
-            <a href="#">
-                <img class="img-responsive portfolio-item" src="http://placehold.it/500x300" alt="">
-            </a>
-        </div>
-
-        <div class="col-sm-3 col-xs-6">
-            <a href="#">
-                <img class="img-responsive portfolio-item" src="http://placehold.it/500x300" alt="">
-            </a>
-        </div>
-
-        <div class="col-sm-3 col-xs-6">
-            <a href="#">
-                <img class="img-responsive portfolio-item" src="http://placehold.it/500x300" alt="">
-            </a>
-        </div>
-
-    </div>
 </div>
 {% endblock %}
-
-{#{% block body %}
-    <h1>Project</h1>
-
-    <table>
-        <tbody>
-            <tr>
-                <th>Id</th>
-                <td>{{ project.id }}</td>
-            </tr>
-            <tr>
-                <th>Title</th>
-                <td>{{ project.title }}</td>
-            </tr>
-            <tr>
-                <th>Description</th>
-                <td>{{ project.description }}</td>
-            </tr>
-        </tbody>
-    </table>
-
-    <ul>
-        <li>
-            <a href="{{ path('project_index') }}">Back to the list</a>
-        </li>
-        {% if app.user != null and app.user.project == project %}
-            <li>
-                <a href="{{ path('project_edit', { 'id': project.id }) }}">Edit</a>
-            </li>
-        {% endif %}
-    </ul>
-{% endblock %}#}
