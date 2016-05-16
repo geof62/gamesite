@@ -3,6 +3,8 @@
 namespace AppBundle\Form;
 
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\CollectionType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\File;
@@ -23,7 +25,14 @@ class ProjectType extends AbstractType
             ->add('sources', SourcesType::class)
             ->add('windows')
             ->add('linux')
-            ->add('mac');
+            ->add('mac')
+            ->add('members', CollectionType::class, array(
+                    'allow_add'   => true,
+                    'allow_delete' => true,
+                    'prototype' => true,
+                    'by_reference' => false,
+                )
+            );
     }
     
     /**

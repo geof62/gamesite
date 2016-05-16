@@ -7,7 +7,6 @@
     <div class="row">
         <div class="col-lg-12">
             <h1 class="page-header">{{ project.title }}
-                <small>Members</small>
                 {% if app.user != null and app.user.project == project %}
                     <div class="pull-right">
                         <a href="{{ path('project_delete', {'id': project.id}) }}"><span class="btn btn-danger">Supprimer</span></a>
@@ -68,17 +67,23 @@
                     {% if project.mac %} Mac OS{% endif %}
                 </li>
                 {% endif %}
-                {% if project.bin.path != NULL %}
+                {% if project.bin != NULL and project.bin.path != NULL %}
                     <li>Binaire: <a href="{{ asset('/uploads/bin/' ~ project.bin.path) }}">{{ project.title }}</a></li>
                 {% endif %}
-                {% if project.sources.path != null %}
+                {% if project.sources != NULL and project.sources.path != null %}
                     <li>Sources: <a href="{{ asset('/uploads/srcs/' ~ project.sources.path) }}">Télécharger</a></li>
                 {% endif %}
             </ul>
 
-
+            <h3>Membres</h3>
+            <ul>
+                {% if project.members != NULL %}
+                    {% for member in project.members %}
+                        <li>{{ member }}</li>
+                    {% endfor %}
+                {% endif %}
+            </ul>
             </div>
-
     </div>
     <!-- /.row -->
 

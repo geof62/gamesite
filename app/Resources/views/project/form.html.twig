@@ -41,6 +41,11 @@
     <label for="srcs">Sources</label>
     {{ form_widget(form.sources.file, {'attr': {'class': 'file', 'type': 'file'}, 'id': 'srcs'}) }}
 </div>
+
+<div class="form-group">
+    <label for="membres">Membres</label>
+    {{ form_widget(form.members, {'attr': {'class': 'styled'}, 'id': 'membres'}) }}
+</div>
 <hr />
 <input type="submit" value="Creer" class="pull-right btn btn-success">
 {{ form_end(form) }}

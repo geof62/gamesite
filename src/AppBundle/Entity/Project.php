@@ -78,6 +78,13 @@ class Project
     private $mac;
 
     /**
+     * @var array
+     *
+     * @ORM\Column(name="members", type="simple_array")
+     */
+    protected $members;
+
+    /**
      * Get id
      *
      * @return int
@@ -347,5 +354,40 @@ class Project
     public function getMac()
     {
         return $this->mac;
+    }
+
+    public function addMember($member)
+    {
+        if (!in_array($member, $this->members, true)) {
+            $this->members[] = $member;
+        }
+
+        return $this;
+    }
+
+    public function removeMember($member)
+    {
+        if (false !== $key = array_search($member, $this->members, true)) {
+            unset($this->members[$key]);
+            $this->members = array_values($this->members);
+        }
+
+        return $this;
+    }
+
+    public function getMembers()
+    {
+        return $this->members;
+    }
+
+    public function setMembers(array $members)
+    {
+        $this->members = array();
+
+        foreach ($members as $member) {
+            $this->addMember($members);
+        }
+
+        return $this;
     }
 }
