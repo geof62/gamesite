@@ -47,12 +47,12 @@ class Project
     private $screens;
 
     /**
-     * @ORM\OneToOne(targetEntity="Bin", mappedBy="project", cascade={"persist"})
+     * @ORM\OneToOne(targetEntity="Bin", mappedBy="project", cascade={"persist", "remove"})
      */
     protected $bin;
 
     /**
-     * @ORM\OneToOne(targetEntity="Sources", mappedBy="project", cascade={"persist"})
+     * @ORM\OneToOne(targetEntity="Sources", mappedBy="project", cascade={"persist", "remove"})
      */
     protected $sources;
 

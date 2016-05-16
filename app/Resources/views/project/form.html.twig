@@ -33,9 +33,8 @@
 </div>
 <div class="form-group">
     <label for="bin">Binnaire</label>
-    {% for bin in form.bin %}
-        <li>{{ form_row(bin.file) }}</li>
-    {% endfor %}
+    {{ form_widget(form.bin.file, {'attr': {'class': 'styled'}, 'id': 'bin'}) }}
+
     {{ form_widget(form.bin, {'attr': {'class': 'file', 'type': 'file'}, 'id': 'description'}) }}
 </div>
 {#

@@ -32,7 +32,12 @@ class Screen
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
      */
-    public $path;
+    protected $path;
+
+    /**
+     * @Assert\File(maxSize="6000000")
+     */
+    private $file;
 
     /**
      * Get id
@@ -91,11 +96,6 @@ class Screen
     {
         return 'uploads';
     }
-
-    /**
-     * @Assert\File(maxSize="6000000")
-     */
-    private $file;
 
     /**
      * Sets file.

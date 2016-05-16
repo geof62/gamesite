@@ -20,7 +20,7 @@ class ProjectType extends AbstractType
     {
         $builder->add('title')
             ->add('description')
-            ->add('bin', new BinType())
+            ->add('bin', BinType::class)
             //->add('sources', EntityType::class, array('required'  => false, 'mapped' => false))
             ->add('windows')
             ->add('linux')
