@@ -52,17 +52,14 @@ class ProjectController extends Controller
             return ($this->redirectToRoute('project_show', array('project' => $user->getProject()->getId())));
 
         $project = new Project();
-        $bin = new Bin();
-        $project->setBin($bin);
         $form = $this->createForm('AppBundle\Form\ProjectType', $project);
 
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
 
             $data = $form->getData();
-            var_dump($form);
-            die();
-
+            $project->getBin()->setProject($project);
+            $project->getBin()->upload();
             $project->setTeamLeader($user);
             $em->persist($project);
             $em->flush();

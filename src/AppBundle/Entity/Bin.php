@@ -38,7 +38,7 @@ class Bin
      * @Assert\File(maxSize="6000000")
      */
     private $file;
-    
+
     /**
      * Get id
      *
@@ -144,10 +144,11 @@ class Bin
     public function upload()
     {
         if (null === $this->getFile()) {
-            echo "toto";
             return;
         }
-        $file_name = $this->project->getTitle()."_".uniqid().".".$this->getFile()->guessExtension();
+        $file_name = $this->project->getTitle()."_".uniqid();
+        if ($this->getFile()->guessExtension() != "")
+            $file_name .= ".".$this->getFile()->guessExtension();
         echo $this->getUploadRootDir();
         $this->getFile()->move(
             $this->getUploadRootDir(),

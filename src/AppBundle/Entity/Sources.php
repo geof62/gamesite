@@ -10,7 +10,7 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Table(name="sources")
  * @ORM\Entity(repositoryClass="AppBundle\Repository\SourcesRepository")
  */
-class Sources extends Doc
+class Sources
 {
     /**
      * @var int
