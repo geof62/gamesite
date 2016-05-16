@@ -5,6 +5,7 @@ namespace AppBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\HttpFoundation\Session\Session;
 
 /**
  * Bin
@@ -143,13 +144,20 @@ class Bin
 
     public function upload()
     {
-        if (null === $this->getFile()) {
+        if (null === $this->getFile() || $this->getFile()->getError() != 0) {
+            $this->file = null;
+            $session = new Session();
+            $session->getFlashBag()->add(
+                'danger',
+                'Unable to save binnary : '.($this->getFile() === null ? "File not uploaded" : $this->getFile()->getErrorMessage())
+            );
             return;
         }
         $file_name = $this->project->getTitle()."_".uniqid();
         if ($this->getFile()->guessExtension() != "")
             $file_name .= ".".$this->getFile()->guessExtension();
-        echo $this->getUploadRootDir();
+        if ($this->path != "")
+            unlink($this->getUploadRootDir(). '/' .$this->path);
         $this->getFile()->move(
             $this->getUploadRootDir(),
             $file_name

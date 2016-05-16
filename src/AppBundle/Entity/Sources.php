@@ -167,13 +167,20 @@ class Sources
 
     public function upload()
     {
-        if (null === $this->getFile()) {
+        if (null === $this->getFile() || $this->getFile()->getError() != 0) {
+            $this->file = null;
+            $session = new Session();
+            $session->getFlashBag()->add(
+                'danger',
+                'Unable to save sources : '.($this->getFile() === null ? "File not uploaded" : $this->getFile()->getErrorMessage())
+            );
             return;
         }
         $file_name = $this->project->getTitle()."_".uniqid();
         if ($this->getFile()->guessExtension() != "")
             $file_name .= ".".$this->getFile()->guessExtension();
-        echo $this->getUploadRootDir();
+        if ($this->path != "")
+            unlink($this->getUploadRootDir(). '/' .$this->path);
         $this->getFile()->move(
             $this->getUploadRootDir(),
             $file_name

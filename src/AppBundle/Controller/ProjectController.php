@@ -107,6 +107,10 @@ class ProjectController extends Controller
         $editForm->handleRequest($request);
 
         if ($editForm->isSubmitted() && $editForm->isValid()) {
+            if (!empty($project->getBin()->getFile()))
+                $project->getBin()->upload();
+            if (!empty($project->getSources()->getFile()))
+                $project->getSources()->upload();
             $em->persist($project);
             $em->flush();
 

@@ -20,6 +20,15 @@
          </header>
 
          <section>
+             <div class="container" style="padding-top: 10px;">
+                 {% for label, flashes in app.session.flashbag.all %}
+                     {% for flash in flashes %}
+                         <div class="alert alert-{{ label }}">
+                             {{ flash }}
+                         </div>
+                     {% endfor %}
+                 {% endfor %}
+             </div>
              {% block body %}{% endblock %}
          </section>
         {% block script %}
