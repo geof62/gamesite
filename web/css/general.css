@@ -18,14 +18,24 @@ body {
     transition: all 0.5s;
     -webkit-transition: all 0.5s;
 }
-.deletion:hover {
-    opacity:1;
+.deletion:hover:after {
+    opacity: 1;
     filter: grayscale(100%);
     -webkit-filter: grayscale(100%);
     -moz-filter: grayscale(100%);
     background-color: rgba(200, 200, 200, 0.9);
 }
 
+.img-menu {
+    width: 700px;
+    height: 400px;
+}
+
+.img-show {
+    width: 750px;
+    height: 500px;
+    margin: 0 auto;
+}
 
 /*html
 {

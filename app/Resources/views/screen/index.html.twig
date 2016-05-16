@@ -22,7 +22,7 @@
         {% endif %}
         <div class="col-md-3 portfolio-item">
             <a href="#">
-                <!--<a class="deletion" href="{{ path('screen_delete', {'project': project.id, 'screen': img.id}) }}">--><img onclick="window.open(this.src)" class="img-responsive deletion" src="{{ asset('/uploads/' ~ img.path) }}" alt=""><!--</a>-->
+                <a class="deletion" href="{{ path('screen_delete', {'project': project.id, 'screen': img.id}) }}"><img class="img-responsive center-block" src="{{ asset('/uploads/' ~ img.path) }}" alt=""></a>
             </a>
         </div>
         {% if loop.index is divisible by(4) or loop.last %}

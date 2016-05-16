@@ -101,7 +101,7 @@ class ProjectController extends Controller
             $em->persist($project);
             $em->flush();
 
-            return $this->redirectToRoute('project_edit', array('id' => $project->getId()));
+            return $this->redirectToRoute('project_show', array('project' => $project->getId()));
         }
 
         return $this->render('project/edit.html.twig', array(

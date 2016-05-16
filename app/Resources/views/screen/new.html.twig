@@ -1,16 +1,14 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-    <h1>Ajouter une capture pour {{ project.title }}</h1>
+    <div class="container">
+        <h1>Ajouter une capture pour {{ project.title }}</h1>
 
-    {{ form_start(form) }}
-        {{ form_widget(form) }}
-        <input type="submit" value="Ajouter" />
-    {{ form_end(form) }}
-
-    <ul>
-        <li>
-            <a href="{{ path('screen_index', {'project': project.id}) }}">Back to the list</a>
-        </li>
-    </ul>
+        {{ form_start(form) }}
+            {{ form_widget(form.file, {'attr': {'class': 'form-control'}}) }}
+            <hr />
+            <a href="{{ path('screen_index', {'project': project.id}) }}"><div class="btn btn-default">Annuler</div></a>
+            <input class="btn btn-success pull-right" type="submit" value="Ajouter" />
+        {{ form_end(form) }}
+    </div>
 {% endblock %}

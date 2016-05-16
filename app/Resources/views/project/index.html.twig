@@ -19,12 +19,14 @@
                     <div class="row">
                 {% endif %}
                 <div class="col-md-4 portfolio-item">
-                    <a href="#">
-			{#{% if project.screens != null %}
-				<img class="img-responsive" src="{{ asset('uploads/' ~ project.screens) }}" alt="">
-			{% else %}#}
-                        	<img class="img-responsive" src="http://placehold.it/700x400" alt="">
-			{#{% endif %}#}
+                    <a href="{{ path('project_show', {project: project.id}) }}">
+                        <img class="img-responsive menu-img center-block" src="
+                            {% if project.screens|length != 0 %}
+                                {{ asset('uploads/' ~ project.screens[0].path) }}
+			                {% else %}
+                        	    http://placehold.it/700x400
+			                {% endif %}
+			            " alt="{{ project.title }} screenshot" />
                     </a>
                     <h3>
                         <a href="{{ path('project_show', {project: project.id}) }}">{{ project.title }}</a>
