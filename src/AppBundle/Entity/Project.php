@@ -57,6 +57,27 @@ class Project
     protected $sources;
 
     /**
+     * @var boolean
+     *
+     * @ORM\Column(name="win", type="boolean")
+     */
+    private $windows;
+
+    /**
+     * @var boolean
+     *
+     * @ORM\Column(name="linux", type="boolean")
+     */
+    private $linux;
+
+    /**
+     * @var boolean
+     *
+     * @ORM\Column(name="max", type="boolean")
+     */
+    private $mac;
+
+    /**
      * Get id
      *
      * @return int
@@ -230,5 +251,101 @@ class Project
     public function __toString()
     {
         return $this->getTitle();
+    }
+
+    /**
+     * Set platform
+     *
+     * @param string $platform
+     *
+     * @return Project
+     */
+    public function setPlatform($platform)
+    {
+        $this->platform = $platform;
+
+        return $this;
+    }
+
+    /**
+     * Get platform
+     *
+     * @return string
+     */
+    public function getPlatform()
+    {
+        return $this->platform;
+    }
+
+    /**
+     * Set windows
+     *
+     * @param boolean $windows
+     *
+     * @return Project
+     */
+    public function setWindows($windows)
+    {
+        $this->windows = $windows;
+
+        return $this;
+    }
+
+    /**
+     * Get windows
+     *
+     * @return boolean
+     */
+    public function getWindows()
+    {
+        return $this->windows;
+    }
+
+    /**
+     * Set linux
+     *
+     * @param boolean $linux
+     *
+     * @return Project
+     */
+    public function setLinux($linux)
+    {
+        $this->linux = $linux;
+
+        return $this;
+    }
+
+    /**
+     * Get linux
+     *
+     * @return boolean
+     */
+    public function getLinux()
+    {
+        return $this->linux;
+    }
+
+    /**
+     * Set mac
+     *
+     * @param boolean $mac
+     *
+     * @return Project
+     */
+    public function setMac($mac)
+    {
+        $this->mac = $mac;
+
+        return $this;
+    }
+
+    /**
+     * Get mac
+     *
+     * @return boolean
+     */
+    public function getMac()
+    {
+        return $this->mac;
     }
 }

@@ -2,6 +2,7 @@
 
 namespace AppBundle\Controller;
 
+use AppBundle\Entity\Bin;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
@@ -42,23 +43,32 @@ class ProjectController extends Controller
      */
     public function newAction(Request $request)
     {
-        if (!$this->isGranted('ROLE_USER'))
-            return ($this->redirectToRoute('index'));
-        $em = $this->getDoctrine()->getManager();
         $user = $this->get('security.token_storage')->getToken()->getUser();
-        if (($project = $em->getRepository('AppBundle:Project')->findOneByTeamLeader($user)) != NULL)
-            return ($this->redirectToRoute('project_show', array('project' => $project->getId())));
-        $project = new Project();
-        $form = $this->createForm('AppBundle\Form\ProjectType', $project);
-        $form->handleRequest($request);
+        $em = $this->getDoctrine()->getManager();
 
+        if (!$this->isGranted('ROLE_USER') || $user->getProject() != null)
+            return ($this->redirectToRoute('index'));
+        if ($user->getProject() != null)
+            return ($this->redirectToRoute('project_show', array('project' => $user->getProject()->getId())));
+
+        $project = new Project();
+        $bin = new Bin();
+        $project->setBin($bin);
+        $form = $this->createForm('AppBundle\Form\ProjectType', $project);
+
+        $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
+
+            $data = $form->getData();
+            var_dump($form);
+            die();
+
             $project->setTeamLeader($user);
             $em->persist($project);
             $em->flush();
+
             $user->setProject($project);
             $em->flush();
-
             return $this->redirectToRoute('project_show', array('project' => $project->getId()));
         }
 
@@ -106,7 +116,7 @@ class ProjectController extends Controller
 
         return $this->render('project/edit.html.twig', array(
             'project' => $project,
-            'edit_form' => $editForm->createView(),
+            'form' => $editForm->createView(),
             'delete_form' => $deleteForm->createView(),
         ));
     }

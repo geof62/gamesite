@@ -27,7 +27,6 @@ class Sources extends Doc
      */
     private $project;
 
-
     /**
      * Get id
      *

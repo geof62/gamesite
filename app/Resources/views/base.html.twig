@@ -6,7 +6,8 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         {% block stylesheets %}
             {% stylesheets 'css/general.css'
-                'css/bootstrap.min.css' filter='cssrewrite' %}
+                'css/bootstrap.min.css'
+                'css/fileinput.min.css' filter='cssrewrite' %}
             <link rel="stylesheet" href="{{ asset_url }}" />
             {% endstylesheets %}
         {% endblock %}
@@ -22,7 +23,10 @@
          </section>
         {% block script %}
             {% javascripts 'js/jquery.js'
-                'js/bootstrap.min.js' output='js/app.js' %}
+                'js/bootstrap.min.js'
+                'js/canvas-to-blob.min.js'
+                'js/fileinput.min.js'
+                'js/fileinput_locale_fr.js' output='js/app.js' %}
                 <script src="{{ asset_url }}"></script>
             {% endjavascripts %}
         {% endblock %}

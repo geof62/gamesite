@@ -6,17 +6,14 @@
         <h1 style="display: inline-block">Project creation</h1>
         <a href="{{ path('project_index') }}" class="pull-right"><span style="margin-top: 25px;" class="btn btn-default">Annuler</span></a>
         <hr />
-        {{ form_start(form) }}
-            <div class="form-group">
-                <label for="title">Nom:</label>
-                {{ form_widget(form.title, {'attr': {'class': 'form-control'}}) }}
-            </div>
-            <div class="form-group">
-                <label for="description">Description:</label>
-                {{ form_widget(form.description, {'attr': {'class': 'form-control', 'rows': '5'}}) }}
-            </div>
-            <hr />
-            <input type="submit" value="Creer" class="pull-right btn btn-success">
-        {{ form_end(form) }}
+        {% include 'project/form.html.twig' %}
     </div>
+{% endblock %}
+
+{% block script %}
+    {{ parent() }}
+    <script>
+        $("#bin").fileinput();
+        $("#srcs").fileinput({allowedFileExtensions: ["zip", "rar", "tar", "tar.gz"]});
+    </script>
 {% endblock %}

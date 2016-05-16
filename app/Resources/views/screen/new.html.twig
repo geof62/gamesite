@@ -3,12 +3,20 @@
 {% block body %}
     <div class="container">
         <h1>Ajouter une capture pour {{ project.title }}</h1>
+        <hr />
 
         {{ form_start(form) }}
-            {{ form_widget(form.file, {'attr': {'class': 'form-control'}}) }}
+            {{ form_widget(form.file, {'attr': {'class': 'file', 'type': 'file'}, 'id': 'file'}) }}
             <hr />
             <a href="{{ path('screen_index', {'project': project.id}) }}"><div class="btn btn-default">Annuler</div></a>
             <input class="btn btn-success pull-right" type="submit" value="Ajouter" />
         {{ form_end(form) }}
     </div>
+{% endblock %}
+
+{% block script %}
+    {{ parent() }}
+    <script>
+        $("#file").fileinput({allowedFileExtensions: ["jpg", "png", "gif"]});
+    </script>
 {% endblock %}

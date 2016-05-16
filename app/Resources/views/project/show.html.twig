@@ -58,9 +58,16 @@
             {% endif %}
 
             <h3>Description</h3>
-            <p>{{ project.description }}</p>
+            <p>{{ project.description|nl2br }}</p>
             <h3>Details</h3>
             <ul>
+                {% if project.windows or project.linux or project.mac %}
+                <li>
+                    plateforme: {% if project.windows %} Windows{% if project.linux or project.mac %} /{% endif %}{% endif %}
+                    {% if project.linux %} Linux{% if project.mac %} /{% endif %}{% endif %}
+                    {% if project.mac %} Mac OS{% endif %}
+                </li>
+                {% endif %}
                 {% if project.bin != NULL %}
                     <li>Binaire: <a href="{{ project.bin }}">{{ project.title }}</a></li>
                 {% endif %}

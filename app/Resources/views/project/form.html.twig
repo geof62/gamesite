@@ -1,0 +1,48 @@
+{{ form_start(form, {'attr': {'role': 'form'}}) }}
+<div class="form-group">
+    <label for="title">Nom:</label>
+    {{ form_widget(form.title, {'attr': {'class': 'form-control'}, 'id': 'title'}) }}
+</div>
+<div class="form-group">
+    <label for="description">Description:</label>
+    {{ form_widget(form.description, {'attr': {'class': 'form-control', 'rows': '20'}, 'id': 'description'}) }}
+</div>
+<hr />
+<div class="form-group">
+    <label for="platform">Plateforme:</label><br />
+    <div class="checkbox">
+        <label for="windows">
+            {{ form_widget(form.windows, {'attr': {'class': 'styled'}, 'id': 'windows'}) }}
+            Windows
+        </label>
+    </div>
+
+    <div class="checkbox">
+        <label for="linux">
+            {{ form_widget(form.linux, {'attr': {'class': 'styled'}, 'id': 'linux'}) }}
+            Linux
+        </label>
+    </div>
+
+    <div class="checkbox">
+        <label for="mac">
+            {{ form_widget(form.mac, {'attr': {'class': 'styled'}, 'id': 'mac'}) }}
+            Mac OS
+        </label>
+    </div>
+</div>
+<div class="form-group">
+    <label for="bin">Binnaire</label>
+    {% for bin in form.bin %}
+        <li>{{ form_row(bin.file) }}</li>
+    {% endfor %}
+    {{ form_widget(form.bin, {'attr': {'class': 'file', 'type': 'file'}, 'id': 'description'}) }}
+</div>
+{#
+<div class="form-group">
+    <label for="srcs">Sources</label>
+    {{ form_widget(form.sources, {'attr': {'class': 'file', 'type': 'file'}, 'id': 'srcs'}) }}
+</div>#}
+<hr />
+<input type="submit" value="Creer" class="pull-right btn btn-success">
+{{ form_end(form) }}
