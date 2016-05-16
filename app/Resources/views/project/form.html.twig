@@ -44,7 +44,17 @@
 
 <div class="form-group">
     <label for="membres">Membres</label>
-    {{ form_widget(form.members, {'attr': {'class': 'styled'}, 'id': 'membres'}) }}
+    <ul id="members-fields-list"
+        data-prototype="{{ form_widget(form.members.vars.prototype)|e }}">
+        {% for member in form.members %}
+            <li>
+                {{ form_errors(member) }}
+                {{ form_widget(member) }}
+            </li>
+        {% endfor %}
+    </ul>
+
+    <a href="#" id="add-another-member">Ajouter un membre</a>
 </div>
 <hr />
 <input type="submit" value="Creer" class="pull-right btn btn-success">
