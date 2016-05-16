@@ -68,11 +68,11 @@
                     {% if project.mac %} Mac OS{% endif %}
                 </li>
                 {% endif %}
-                {% if project.bin != NULL %}
-                    <li>Binaire: <a href="{{ project.bin.path }}">{{ project.title }}</a></li>
+                {% if project.bin.path != NULL %}
+                    <li>Binaire: <a href="{{ asset('/uploads/bin/' ~ project.bin.path) }}">{{ project.title }}</a></li>
                 {% endif %}
-                {% if project.sources != null %}
-                    <li>Sources: <a href="{{ project.sources }}">Télécharger</a></li>
+                {% if project.sources.path != null %}
+                    <li>Sources: <a href="{{ asset('/uploads/srcs/' ~ project.sources.path) }}">Télécharger</a></li>
                 {% endif %}
             </ul>
 

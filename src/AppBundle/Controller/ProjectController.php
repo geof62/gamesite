@@ -59,6 +59,8 @@ class ProjectController extends Controller
 
             $data = $form->getData();
             $project->getBin()->setProject($project);
+            $project->getSources()->setProject($project);
+            $project->getSources()->upload();
             $project->getBin()->upload();
             $project->setTeamLeader($user);
             $em->persist($project);

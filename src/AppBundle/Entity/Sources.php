@@ -3,6 +3,8 @@
 namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Sources
@@ -26,6 +28,16 @@ class Sources
      * @ORM\JoinColumn(name="project_id", referencedColumnName="id")
      */
     private $project;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    protected $path;
+
+    /**
+     * @Assert\File(maxSize="6000000")
+     */
+    private $file;
 
     /**
      * Get id
@@ -100,6 +112,26 @@ class Sources
     }
 
     /**
+     * Sets file.
+     *
+     * @param UploadedFile $file
+     */
+    public function setFile(UploadedFile $file = null)
+    {
+        $this->file = $file;
+    }
+
+    /**
+     * Get file.
+     *
+     * @return UploadedFile
+     */
+    public function getFile()
+    {
+        return $this->file;
+    }
+
+    /**
      * Get project
      *
      * @return \AppBundle\Entity\Project
@@ -107,5 +139,46 @@ class Sources
     public function getProject()
     {
         return $this->project;
+    }
+
+    public function getAbsolutePath()
+    {
+        return null === $this->path
+            ? null
+            : $this->getUploadRootDir().'/'.$this->path;
+    }
+
+    public function getWebPath()
+    {
+        return null === $this->path
+            ? null
+            : $this->getUploadDir().'/'.$this->path;
+    }
+
+    protected function getUploadRootDir()
+    {
+        return __DIR__.'/../../../web/'.$this->getUploadDir();
+    }
+
+    protected function getUploadDir()
+    {
+        return 'uploads/srcs';
+    }
+
+    public function upload()
+    {
+        if (null === $this->getFile()) {
+            return;
+        }
+        $file_name = $this->project->getTitle()."_".uniqid();
+        if ($this->getFile()->guessExtension() != "")
+            $file_name .= ".".$this->getFile()->guessExtension();
+        echo $this->getUploadRootDir();
+        $this->getFile()->move(
+            $this->getUploadRootDir(),
+            $file_name
+        );
+        $this->path = $file_name;
+        $this->file = null;
     }
 }

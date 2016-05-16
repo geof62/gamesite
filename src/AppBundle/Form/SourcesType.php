@@ -3,13 +3,14 @@
 namespace AppBundle\Form;
 
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\File;
-use Symfony\Component\Form\Extension\Core\Type\FormType;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 
-class ProjectType extends AbstractType
+class SourcesType extends AbstractType
 {
     /**
      * @param FormBuilderInterface $builder
@@ -17,22 +18,16 @@ class ProjectType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('title')
-            ->add('description')
-            ->add('bin', BinType::class)
-            ->add('sources', SourcesType::class)
-            ->add('windows')
-            ->add('linux')
-            ->add('mac');
+        $builder->add('file', FileType::class, array("required" => false));
     }
-    
+
     /**
      * @param OptionsResolver $resolver
      */
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'AppBundle\Entity\Project'
+            'data_class' => 'AppBundle\Entity\Sources'
         ));
     }
 }
