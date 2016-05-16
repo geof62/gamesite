@@ -1,6 +1,37 @@
 {% extends 'base.html.twig' %}
 
+
 {% block body %}
+<div class="container">
+
+    <div class="row">
+        <div class="col-lg-12">
+            <h1 class="page-header">{{ project.title }}
+                <small>Screenshot</small>
+                <div class="pull-right">
+                    <a href="{{ path('screen_new', {'project': project.id}) }}"><span class="btn btn-success">Ajouter</span></a>
+                    <a href="{{ path('project_show', {'project': project.id}) }}"><span class="btn btn-default">Retour</span></a>
+                </div>
+            </h1>
+        </div>
+    </div>
+
+    {% for img in project.screens %}
+        {% if loop.index0 is divisible by(4)%}
+            <div class="row">
+        {% endif %}
+        <div class="col-md-3 portfolio-item">
+            <a href="#">
+                <!--<a class="deletion" href="{{ path('screen_delete', {'project': project.id, 'screen': img.id}) }}">--><img onclick="window.open(this.src)" class="img-responsive deletion" src="{{ asset('/uploads/' ~ img.path) }}" alt=""><!--</a>-->
+            </a>
+        </div>
+        {% if loop.index is divisible by(4) or loop.last %}
+            </div>
+        {% endif %}
+    {% endfor %}
+</div>
+{% endblock %}
+{#{% block body %}
     <h1>Screen list</h1>
 
     <table>
@@ -26,4 +57,4 @@
             <a href="{{ path('screen_new') }}">Create a new entry</a>
         </li>
     </ul>
-{% endblock %}
+{% endblock %}#}

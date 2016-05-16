@@ -8,11 +8,12 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use AppBundle\Entity\Screen;
 use AppBundle\Form\ScreenType;
+use AppBundle\Entity\Project;
 
 /**
  * Screen controller.
  *
- * @Route("/screen")
+ * @Route("/project/{project}/screen")
  */
 class ScreenController extends Controller
 {
@@ -20,17 +21,16 @@ class ScreenController extends Controller
     /**
      * Lists all Project entities.
      *
-     * @Route("/screens", name="screen_index")
+     * @Route("/", name="screen_index")
      * @Method("GET")
      */
-    public function indexAction()
+    public function indexAction(Project $project)
     {
-        $em = $this->getDoctrine()->getManager();
-
-        $screen = $em->getRepository('AppBundle:Screen')->findAll();
-
+        $user = $this->get('security.token_storage')->getToken()->getUser();
+        if ($user == null || $user->getProject() != $project)
+            throw $this->createNotFoundException('You are not the owner of this project');
         return $this->render('screen/index.html.twig', array(
-            'screens' => $screen,
+            'project' => $project,
         ));
     }
 
@@ -40,15 +40,12 @@ class ScreenController extends Controller
      * @Route("/new", name="screen_new")
      * @Method({"GET", "POST"})
      */
-    public function newAction(Request $request)
+    public function newAction(Request $request, Project $project)
     {
-        if (!$this->isGranted('ROLE_USER'))
-            return ($this->redirectToRoute('index'));
-        $em = $this->getDoctrine()->getManager();
         $user = $this->get('security.token_storage')->getToken()->getUser();
-        $project = $em->getRepository('AppBundle:Project')->findByTeamLeader($user);
-        if ($project == NULL)
-            return ($this->redirectToRoute('index'));
+        if (!$this->isGranted('ROLE_USER') || $project != $user->getProject())
+            throw $this->createNotFoundException('You are not the owner of this project');
+
         $screen = new Screen();
         $form = $this->createForm('AppBundle\Form\ScreenType', $screen);
         $form->handleRequest($request);
@@ -60,11 +57,11 @@ class ScreenController extends Controller
             $em->persist($screen);
             $em->flush();
 
-            return $this->redirectToRoute('screen_show', array('id' => $screen->getId()));
+            return $this->redirectToRoute('screen_index', array('project' => $project->getId()));
         }
 
         return $this->render('screen/new.html.twig', array(
-            'screen' => $screen,
+            'project' => $project,
             'form' => $form->createView(),
         ));
     }
@@ -72,21 +69,18 @@ class ScreenController extends Controller
     /**
      * Deletes a Screen entity.
      *
-     * @Route("/{id}", name="screen_delete")
-     * @Method("DELETE")
+     * @Route("/remove/{screen}", name="screen_delete")
+     * @Method({"DELETE", "GET"})
      */
-    public function deleteAction(Request $request, Screen $screen)
+    public function deleteAction(Request $request, Project $project, Screen $screen)
     {
-        $form = $this->createDeleteForm($screen);
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
-            $em->remove($screen);
-            $em->flush();
-        }
-
-        return $this->redirectToRoute('screen_index');
+        $user = $this->get('security.token_storage')->getToken()->getUser();
+        if (!$this->isGranted('ROLE_USER') || $project != $user->getProject())
+            throw $this->createNotFoundException('You are not the owner of this project');
+        $em = $this->getDoctrine()->getManager();
+        $em->remove($screen);
+        $em->flush();
+        return $this->redirectToRoute('screen_index', array("project" => $project->getId()));
     }
 
     /**
