@@ -21,6 +21,8 @@ class DefaultController extends Controller
 
     public function loginAction(Request $request)
     {
+        if ($this->isGranted('ROLE_USER'))
+            return ($this->redirectToRoute('index'));
         $authenticationUtils = $this->get('security.authentication_utils');
         return $this->render('AppBundle::connection.html.twig', array(
             'last_username' => $authenticationUtils->getLastUsername(),

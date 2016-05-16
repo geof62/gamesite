@@ -36,23 +36,23 @@ class Project
     private $description;
 
     /**
-     * @ORM\OneToOne(targetEntity="User", mappedBy="project")
+     * @ORM\OneToOne(targetEntity="User", mappedBy="project", cascade={"persist"})
      * @ORM\JoinColumn(name="user_login", referencedColumnName="login")
      */
     private $teamLeader;
 
     /**
-     * @ORM\OneToMany(targetEntity="Screen", mappedBy="project", cascade={"remove"})
+     * @ORM\OneToMany(targetEntity="Screen", mappedBy="project", cascade={"persist", "remove"})
      */
     private $screens;
 
     /**
-     * @ORM\OneToOne(targetEntity="Bin", mappedBy="project")
+     * @ORM\OneToOne(targetEntity="Bin", mappedBy="project", cascade={"persist"})
      */
     protected $bin;
 
     /**
-     * @ORM\OneToOne(targetEntity="Sources", mappedBy="project")
+     * @ORM\OneToOne(targetEntity="Sources", mappedBy="project", cascade={"persist"})
      */
     protected $sources;
 
