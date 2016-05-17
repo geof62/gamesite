@@ -33,6 +33,7 @@ class ProjectType extends AbstractType
                     'by_reference' => false,
                     'entry_options'  => array(
                         'attr'      => array('class' => 'form-control')),
+                    'required' => false,
                 )
             );
     }

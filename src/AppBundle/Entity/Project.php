@@ -359,7 +359,7 @@ class Project
 
     public function addMember($member)
     {
-        if (!in_array($member, $this->members, true)) {
+        if ($member !== "" && $member != NULL && !in_array($member, $this->members, true)) {
             $this->members[] = $member;
         }
 

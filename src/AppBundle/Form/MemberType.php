@@ -13,7 +13,7 @@ class MemberType extends AbstractType
     {
         parent::buildForm($builder, $options);
 
-        $builder->add('name', 'text');
+        $builder->add('name', 'text', ['required' => false]);
     }
 
     public function setDefaultOptions(OptionsResolverInterface $resolver)

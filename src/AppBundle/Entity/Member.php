@@ -4,9 +4,6 @@ namespace AppBundle\Entity;
 
 class Member
 {
-    /**
-     * @Assert\NotBlank
-     */
     private $name;
 
     public function setName($name)
