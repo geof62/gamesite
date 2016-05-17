@@ -80,9 +80,9 @@ class Project
     /**
      * @var array
      *
-     * @ORM\Column(name="members", type="simple_array")
+     * @ORM\Column(name="members", type="simple_array", nullable=true)
      */
-    protected $members;
+    protected $members = null;
 
     /**
      * Get id
@@ -147,6 +147,7 @@ class Project
     public function __construct()
     {
         $this->screens = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->members = array();
     }
 
     /**
@@ -383,9 +384,9 @@ class Project
     public function setMembers(array $members)
     {
         $this->members = array();
-
+        
         foreach ($members as $member) {
-            $this->addMember($members);
+            $this->addMember($member);
         }
 
         return $this;

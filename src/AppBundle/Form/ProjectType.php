@@ -31,6 +31,8 @@ class ProjectType extends AbstractType
                     'allow_delete' => true,
                     'prototype' => true,
                     'by_reference' => false,
+                    'entry_options'  => array(
+                        'attr'      => array('class' => 'form-control')),
                 )
             );
     }

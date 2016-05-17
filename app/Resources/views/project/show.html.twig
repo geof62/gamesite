@@ -75,14 +75,14 @@
                 {% endif %}
             </ul>
 
-            <h3>Membres</h3>
-            <ul>
-                {% if project.members != NULL %}
+            {% if project.members != NULL %}
+                <h3>Membres</h3>
+                <ul>
                     {% for member in project.members %}
                         <li>{{ member }}</li>
                     {% endfor %}
-                {% endif %}
-            </ul>
+                </ul>
+            {% endif %}
             </div>
     </div>
     <!-- /.row -->
